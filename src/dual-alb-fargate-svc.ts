@@ -22,9 +22,13 @@ export class DualAlbFargateService extends BaseFargateService {
    * The internal ALB
    */
   readonly internalAlb?: elbv2.ApplicationLoadBalancer
+
+  protected externalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener}
+
   constructor(scope: cdk.Construct, id: string, props: DualAlbFargateServiceProps) {
     super(scope, id, props);
 
+    this.externalAlbApplicationListeners = {};
 
     if (this.hasExternalLoadBalancer) {
       this.externalAlb = new elbv2.ApplicationLoadBalancer(this, 'ExternalAlb', {
@@ -59,14 +63,28 @@ export class DualAlbFargateService extends BaseFargateService {
           healthCheck: t.healthCheck,
         });
         // listener for the external ALB
-        new elbv2.ApplicationListener(this, `ExtAlbListener${t.external.port}`, {
-          loadBalancer: this.externalAlb!,
-          open: true,
-          port: t.external.port,
-          protocol: t.external.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
-          certificates: t.external.certificate,
-          defaultTargetGroups: [exttg],
-        });
+        const listenerId = `ExtAlbListener${t.external.port}`;
+        let listener = this.externalAlbApplicationListeners[listenerId];
+        if (!listener) {
+          listener = new elbv2.ApplicationListener(this, listenerId, {
+            loadBalancer: this.externalAlb!,
+            open: true,
+            port: t.external.port,
+            protocol: t.external.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+            certificates: t.external.certificate,
+            defaultTargetGroups: [exttg],
+          });
+          this.externalAlbApplicationListeners[listenerId] = listener;
+        }
+        if (t.external.forwardConditions) {
+          new elbv2.ApplicationListenerRule(this, `ExtAlbListener${t.external.port}Rule${index}`, {
+            priority: index + 1,
+            conditions: t.external.forwardConditions,
+            listener: listener,
+            action: elbv2.ListenerAction.forward([exttg]),
+          });
+        }
+
         scaling.scaleOnRequestCount('RequestScaling', {
           requestsPerTarget: t.scalingPolicy?.requestPerTarget ?? 1000,
           targetGroup: exttg,
