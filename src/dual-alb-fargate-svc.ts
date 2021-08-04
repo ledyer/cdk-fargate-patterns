@@ -25,10 +25,14 @@ export class DualAlbFargateService extends BaseFargateService {
 
   protected externalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener}
 
+  protected internalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener}
+
+
   constructor(scope: cdk.Construct, id: string, props: DualAlbFargateServiceProps) {
     super(scope, id, props);
 
     this.externalAlbApplicationListeners = {};
+    this.internalAlbApplicationListeners = {};
 
     if (this.hasExternalLoadBalancer) {
       this.externalAlb = new elbv2.ApplicationLoadBalancer(this, 'ExternalAlb', {
@@ -76,6 +80,7 @@ export class DualAlbFargateService extends BaseFargateService {
           });
           this.externalAlbApplicationListeners[listenerId] = listener;
         }
+
         if (t.external.forwardConditions) {
           new elbv2.ApplicationListenerRule(this, `ExtAlbListener${t.external.port}Rule${index}`, {
             priority: index + 1,
@@ -102,14 +107,28 @@ export class DualAlbFargateService extends BaseFargateService {
         });
 
         // listener for the internal ALB
-        new elbv2.ApplicationListener(this, `IntAlbListener${t.internal.port}`, {
-          loadBalancer: this.internalAlb!,
-          open: true,
-          port: t.internal.port,
-          protocol: t.internal.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
-          certificates: t.internal.certificate,
-          defaultTargetGroups: [inttg],
-        });
+        const listenerId = `IntAlbListener${t.internal.port}`;
+        let listener = this.internalAlbApplicationListeners[listenerId];
+        if (!listener) {
+          listener = new elbv2.ApplicationListener(this, `IntAlbListener${t.internal.port}`, {
+            loadBalancer: this.internalAlb!,
+            open: true,
+            port: t.internal.port,
+            protocol: t.internal.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+            certificates: t.internal.certificate,
+            defaultTargetGroups: [inttg],
+          });
+          this.internalAlbApplicationListeners[listenerId] = listener;
+        }
+
+        if (t.internal.forwardConditions) {
+          new elbv2.ApplicationListenerRule(this, `IntAlbListener${t.internal.port}Rule${index}`, {
+            priority: index + 1,
+            conditions: t.internal.forwardConditions,
+            listener: listener,
+            action: elbv2.ListenerAction.forward([inttg]),
+          });
+        }
 
         // extra scaling policy
         scaling.scaleOnRequestCount('RequestScaling2', {
