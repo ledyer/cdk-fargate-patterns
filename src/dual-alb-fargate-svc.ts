@@ -85,7 +85,7 @@ export class DualAlbFargateService extends BaseFargateService {
           new elbv2.ApplicationListenerRule(this, `ExtAlbListener${t.external.port}Rule${index}`, {
             priority: index + 1,
             conditions: t.external.forwardConditions,
-            listener: listener,
+            listener,
             action: elbv2.ListenerAction.forward([exttg]),
           });
         }
@@ -125,7 +125,7 @@ export class DualAlbFargateService extends BaseFargateService {
           new elbv2.ApplicationListenerRule(this, `IntAlbListener${t.internal.port}Rule${index}`, {
             priority: index + 1,
             conditions: t.internal.forwardConditions,
-            listener: listener,
+            listener,
             action: elbv2.ListenerAction.forward([inttg]),
           });
         }

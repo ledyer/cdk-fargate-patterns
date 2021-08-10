@@ -73,7 +73,10 @@ export interface LoadBalancerAccessibility {
    */
   readonly certificate?: acm.ICertificate[];
 
-  /** Listener forward conditions */
+  /** 
+  * Listener forward conditions.
+  * @default - no forward conditions.
+  */
   readonly forwardConditions?: elbv2.ListenerCondition[];
 }
 
