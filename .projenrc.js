@@ -27,6 +27,7 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-certificatemanager',
     '@aws-cdk/aws-elasticloadbalancingv2',
   ],
+  minNodeVersion: '12.20.0',
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
