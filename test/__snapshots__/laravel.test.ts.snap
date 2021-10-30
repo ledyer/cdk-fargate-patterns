@@ -190,6 +190,12 @@ Object {
         "HealthCheckPath": "/",
         "Port": 80,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "LaravelBitnamiDemoVpc495B9306",
@@ -1591,6 +1597,12 @@ Object {
         "HealthCheckPath": "/",
         "Port": 80,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "LaravelNginxDemoVpc0CC479F5",
