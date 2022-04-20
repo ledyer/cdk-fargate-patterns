@@ -1,20 +1,24 @@
-import '@aws-cdk/assert/jest';
 import * as path from 'path';
-import * as cdk from '@aws-cdk/core';
+
+import {
+  App, Stack,
+} from 'aws-cdk-lib';
+
+
 import { Laravel } from '../src';
 
-let app: cdk.App;
+let app: App;
 let env: { region: string; account: string };
-let stack: cdk.Stack;
+let stack: Stack;
 
 
 beforeEach(() => {
-  app = new cdk.App();
+  app = new App();
   env = {
     region: 'us-east-1',
     account: '123456789012',
   };
-  stack = new cdk.Stack(app, 'demo-stack', { env });
+  stack = new Stack(app, 'demo-stack', { env });
 });
 
 

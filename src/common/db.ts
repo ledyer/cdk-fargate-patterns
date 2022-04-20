@@ -1,8 +1,10 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as rds from '@aws-cdk/aws-rds';
-import * as secretsmanager from '@aws-cdk/aws-secretsmanager';
-import * as cdk from '@aws-cdk/core';
-
+import {
+  Duration, RemovalPolicy, CfnOutput,
+  aws_ec2 as ec2,
+  aws_rds as rds,
+  aws_secretsmanager as secretsmanager,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 export interface DatabaseProps {
   /**
@@ -49,7 +51,7 @@ export interface DatabaseProps {
    *
    * @default - 7 days
    */
-  readonly backupRetention?: cdk.Duration;
+  readonly backupRetention?: Duration;
   /**
    * Allow database connection.
    * @default - the whole VPC CIDR
@@ -89,7 +91,7 @@ export interface DatabaseCofig {
 /**
  * Represents the database instance or database cluster
  */
-export class Database extends cdk.Construct {
+export class Database extends Construct {
   readonly vpc: ec2.IVpc;
   readonly clusterEndpointHostname: string;
   readonly clusterIdentifier: string;
@@ -97,7 +99,7 @@ export class Database extends cdk.Construct {
   readonly connections: ec2.Connections;
   private readonly _mysqlListenerPort: number = 3306;
 
-  constructor(scope: cdk.Construct, id: string, props: DatabaseProps) {
+  constructor(scope: Construct, id: string, props: DatabaseProps) {
     super(scope, id);
     this.vpc = props.vpc;
     const config = props.auroraServerless ? this._createServerlessCluster(props)
@@ -123,11 +125,11 @@ export class Database extends cdk.Construct {
         version: rds.MysqlEngineVersion.VER_8_0_23,
       }),
       storageEncrypted: true,
-      backupRetention: props.backupRetention ?? cdk.Duration.days(7),
+      backupRetention: props.backupRetention ?? Duration.days(7),
       credentials: rds.Credentials.fromGeneratedSecret('admin'),
       instanceType: props.instanceType ?? new ec2.InstanceType('r5.large'),
       parameterGroup: rds.ParameterGroup.fromParameterGroupName(this, 'ParameterGroup', 'default.mysql8.0'),
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
     return {
       connections: dbInstance.connections,
@@ -151,10 +153,10 @@ export class Database extends cdk.Construct {
       },
       parameterGroup: rds.ParameterGroup.fromParameterGroupName(this, 'ParameterGroup', 'default.aurora-mysql5.7'),
       backup: {
-        retention: props.backupRetention ?? cdk.Duration.days(7),
+        retention: props.backupRetention ?? Duration.days(7),
       },
       storageEncrypted: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
     return {
       connections: dbCluster.connections,
@@ -169,8 +171,8 @@ export class Database extends cdk.Construct {
       vpc: props.vpc,
       vpcSubnets: props.databaseSubnets,
       credentials: rds.Credentials.fromGeneratedSecret('admin'),
-      backupRetention: props.backupRetention ?? cdk.Duration.days(7),
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      backupRetention: props.backupRetention ?? Duration.days(7),
+      removalPolicy: RemovalPolicy.DESTROY,
       parameterGroup: rds.ParameterGroup.fromParameterGroupName(this, 'ParameterGroup', 'default.aurora-mysql5.7'),
       defaultDatabaseName: props.defaultDatabaseName,
     });
@@ -183,6 +185,6 @@ export class Database extends cdk.Construct {
   }
 }
 
-function printOutput(scope: cdk.Construct, id: string, key: string | number) {
-  new cdk.CfnOutput(scope, id, { value: String(key) });
+function printOutput(scope: Construct, id: string, key: string | number) {
+  new CfnOutput(scope, id, { value: String(key) });
 }

@@ -1,13 +1,19 @@
 import * as path from 'path';
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
-import * as events from '@aws-cdk/aws-events';
-import * as event_targets from '@aws-cdk/aws-events-targets';
-import * as iam from '@aws-cdk/aws-iam';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as cdk from '@aws-cdk/core';
+
+import {
+  Stack, Duration,
+  aws_ec2 as ec2,
+  aws_ecs as ecs,
+  aws_iam as iam,
+  aws_certificatemanager as acm,
+  aws_elasticloadbalancingv2 as elbv2,
+  aws_events as events,
+  aws_events_targets as event_targets,
+  aws_lambda as lambda,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
+
 import { getOrCreateVpc } from './common/common-functions';
 
 
@@ -159,7 +165,7 @@ export interface FargateTaskProps {
    * that the Amazon ECS service scheduler ignores unhealthy Elastic Load Balancing target health checks after a task has first started.
    * @default cdk.Duration.seconds(60),
   */
-  readonly healthCheckGracePeriod?: cdk.Duration;
+  readonly healthCheckGracePeriod?: Duration;
 }
 
 export interface ServiceScalingPolicy {
@@ -203,7 +209,7 @@ export interface Route53Options {
   readonly internalElbRecordName?: string;
 }
 
-export abstract class BaseFargateService extends cdk.Construct {
+export abstract class BaseFargateService extends Construct {
   /**
    * The VPC
    */
@@ -223,7 +229,7 @@ export abstract class BaseFargateService extends cdk.Construct {
    * determine if vpcSubnets are all public ones
    */
   private isPublicSubnets: boolean = false;
-  constructor(scope: cdk.Construct, id: string, props: BaseFargateServiceProps) {
+  constructor(scope: Construct, id: string, props: BaseFargateServiceProps) {
     super(scope, id);
 
     this.enableLoadBalancerAlias = props.route53Ops?.enableLoadBalancerAlias != false;
@@ -323,15 +329,15 @@ export abstract class BaseFargateService extends cdk.Construct {
     }
 
     // add solution ID for the stack
-    if (!cdk.Stack.of(this).templateOptions.description) {
-      cdk.Stack.of(this).templateOptions.description = '(SO8030) - AWS CDK stack with cdk-fargate-patterns';
+    if (!Stack.of(this).templateOptions.description) {
+      Stack.of(this).templateOptions.description = '(SO8030) - AWS CDK stack with cdk-fargate-patterns';
     }
   }
   private createSpotTerminationHandler(cluster: ecs.ICluster) {
   // create the handler
     const handler = new lambda.DockerImageFunction(this, 'SpotTermHandler', {
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../lambda/spot-term-handler')),
-      timeout: cdk.Duration.seconds(20),
+      timeout: Duration.seconds(20),
     });
     // create event rule
     const rule = new events.Rule(this, 'OnTaskStateChangeEvent', {

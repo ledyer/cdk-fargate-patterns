@@ -43,6 +43,13 @@ Object {
       "Value": "http://internal.svc.local",
     },
   },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
   "Resources": Object {
     "ServiceCluster2E988025": Object {
       "Properties": Object {
@@ -475,16 +482,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "ImageUri": Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "123456789012.dkr.ecr.us-east-1.",
-                Object {
-                  "Ref": "AWS::URLSuffix",
-                },
-                "/aws-cdk/assets:ec3135368f0a72eb451adf9e40cf23a4b80beececc1908170d08a7f81f91f59a",
-              ],
-            ],
+            "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:e1ff86456ef1f6c01cbdba1a0e501d5221501a731018587980a3ea1d80122092",
           },
         },
         "PackageType": "Image",
@@ -1008,6 +1006,12 @@ Object {
       "Properties": Object {
         "Port": 8080,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "ServiceVpc4872DC6E",
@@ -1278,6 +1282,12 @@ Object {
       "Properties": Object {
         "Port": 80,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "ServiceVpc4872DC6E",
@@ -1289,6 +1299,12 @@ Object {
       "Properties": Object {
         "Port": 80,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "ServiceVpc4872DC6E",
@@ -1667,6 +1683,12 @@ Object {
       "Properties": Object {
         "Port": 9090,
         "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
         "TargetType": "ip",
         "VpcId": Object {
           "Ref": "ServiceVpc4872DC6E",
@@ -1957,16 +1979,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:28325e7470894bedacda02d62a695603bdabda54ec265ce856dbbc19e2281ce8",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:41a15895388e7dba28bb25d0cc1d3f8f5a737cd086849b93afa26615183dafa5",
             },
             "Name": "customer",
             "PortMappings": Array [
@@ -2035,7 +2048,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -2098,16 +2111,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:9c8a0a8c928953c03173b81519c09703ecd131ef8aeea26b87b8679c4fd0640d",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:b5b0d572d5a99ff15b00dea2351494c72756eb772862cae0dc3dc8ff2cea37b1",
             },
             "Name": "order",
             "PortMappings": Array [
@@ -2176,7 +2180,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -2239,16 +2243,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:28325e7470894bedacda02d62a695603bdabda54ec265ce856dbbc19e2281ce8",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:41a15895388e7dba28bb25d0cc1d3f8f5a737cd086849b93afa26615183dafa5",
             },
             "Name": "product",
             "PortMappings": Array [
@@ -2317,7 +2312,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -2355,6 +2350,33 @@ Object {
         },
       },
       "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
     },
   },
 }
@@ -2401,6 +2423,13 @@ Object {
     },
     "ServiceInternalEndpointPrivate5DE07128": Object {
       "Value": "http://internal.svc.local",
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
   "Resources": Object {
@@ -2685,16 +2714,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "ImageUri": Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "123456789012.dkr.ecr.us-east-1.",
-                Object {
-                  "Ref": "AWS::URLSuffix",
-                },
-                "/aws-cdk/assets:ec3135368f0a72eb451adf9e40cf23a4b80beececc1908170d08a7f81f91f59a",
-              ],
-            ],
+            "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:e1ff86456ef1f6c01cbdba1a0e501d5221501a731018587980a3ea1d80122092",
           },
         },
         "PackageType": "Image",
@@ -3767,16 +3787,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:28325e7470894bedacda02d62a695603bdabda54ec265ce856dbbc19e2281ce8",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:41a15895388e7dba28bb25d0cc1d3f8f5a737cd086849b93afa26615183dafa5",
             },
             "Name": "customer",
             "PortMappings": Array [
@@ -3845,7 +3856,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -3908,16 +3919,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:9c8a0a8c928953c03173b81519c09703ecd131ef8aeea26b87b8679c4fd0640d",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:b5b0d572d5a99ff15b00dea2351494c72756eb772862cae0dc3dc8ff2cea37b1",
             },
             "Name": "order",
             "PortMappings": Array [
@@ -3986,7 +3988,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -4049,16 +4051,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Join": Array [
-                "",
-                Array [
-                  "123456789012.dkr.ecr.us-east-1.",
-                  Object {
-                    "Ref": "AWS::URLSuffix",
-                  },
-                  "/aws-cdk/assets:28325e7470894bedacda02d62a695603bdabda54ec265ce856dbbc19e2281ce8",
-                ],
-              ],
+              "Fn::Sub": "123456789012.dkr.ecr.us-east-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:41a15895388e7dba28bb25d0cc1d3f8f5a737cd086849b93afa26615183dafa5",
             },
             "Name": "product",
             "PortMappings": Array [
@@ -4127,7 +4120,7 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":ecr:us-east-1:123456789012:repository/aws-cdk/assets",
+                    ":ecr:us-east-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-us-east-1",
                   ],
                 ],
               },
@@ -4165,6 +4158,33 @@ Object {
         },
       },
       "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
     },
   },
 }

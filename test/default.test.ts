@@ -1,26 +1,28 @@
-import '@aws-cdk/assert/jest';
 import * as path from 'path';
-import { ResourcePart } from '@aws-cdk/assert/lib/assertions/have-resource';
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
-import * as cdk from '@aws-cdk/core';
+
+import {
+  App, Stack, Duration,
+  aws_ec2 as ec2,
+  aws_ecs as ecs,
+  aws_certificatemanager as acm,
+  aws_elasticloadbalancingv2 as elbv2,
+} from 'aws-cdk-lib';
+import { Template, Match } from 'aws-cdk-lib/assertions';
 import { DualAlbFargateService, DualNlbFargateService } from '../src/index';
 import { WordPress } from '../src/wordpress';
 
-let app: cdk.App;
+let app: App;
 let env: { region: string; account: string };
-let stack: cdk.Stack;
+let stack: Stack;
 
 
 beforeEach(() => {
-  app = new cdk.App();
+  app = new App();
   env = {
     region: 'us-east-1',
     account: '123456789012',
   };
-  stack = new cdk.Stack(app, 'demo-stack', { env });
+  stack = new Stack(app, 'demo-stack', { env });
 });
 
 
@@ -134,27 +136,20 @@ test('DualAlbFargateService - minimal setup both internal and external ALB', () 
   // THEN
   // We should have two ALBs
   // the external one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
   // the internal one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResourceLike('AWS::ECS::Service', {
-    Properties: {
-      LaunchType: 'FARGATE',
-    },
-    DependsOn: [
-      'ServiceCluster2E988025',
-      'ServiceCluster572F72F1',
-      'ServiceExtAlbListener80CF2B8C01',
-      'ServiceIntAlbListener80DD49BDE2',
-    ],
-  }, ResourcePart.CompleteDefinition);
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
+    LaunchType: 'FARGATE',
+  });
 });
 
 test('DualAlbFargateService - circuit breaker enabled by default', () => {
@@ -178,7 +173,7 @@ test('DualAlbFargateService - circuit breaker enabled by default', () => {
 
   // THEN
   // We should have fargate service with circuit breaker enabled
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
     DeploymentConfiguration: {
       DeploymentCircuitBreaker: {
@@ -213,7 +208,7 @@ test('DualAlbFargateService - circuit breaker disabled', () => {
 
   // THEN
   // We should have fargate service with circuit breaker enabled
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
     DeploymentConfiguration: {
       MaximumPercent: 200,
@@ -241,17 +236,16 @@ test('DualAlbFargateService - internal only', () => {
 
   // THEN
   // we should NOT have the external ALB
-  expect(stack).not.toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
-    Scheme: 'internet-facing',
-    Type: 'application',
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+    Scheme: Match.not('internet-facing'),
   });
   // we should have the internal ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
   });
 });
@@ -275,17 +269,16 @@ test('DualAlbFargateService - external only', () => {
 
   // THEN
   // we should NOT have the internal ALB
-  expect(stack).not.toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
-    Scheme: 'internal',
-    Type: 'application',
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+    Scheme: Match.not('internal'),
   });
   // we should have the external ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
   });
 });
@@ -327,17 +320,17 @@ test('DualAlbFargateService - partial internal only', () => {
 
   // THEN
   // we should still have the external ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
   // we should have the internal ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
   });
 });
@@ -374,17 +367,17 @@ test('DualAlbFargateService - partial external only', () => {
 
   // THEN
   // we should still have the external ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
   // we should have the internal ALB
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     LaunchType: 'FARGATE',
   });
 });
@@ -414,7 +407,7 @@ test('DualAlbFargateService - vpc subnet select default select private subnet', 
 
   // THEN
   // we should still have the assgin public Ip.
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     NetworkConfiguration: {
       AwsvpcConfiguration: {
         AssignPublicIp: 'DISABLED',
@@ -471,7 +464,7 @@ test('DualAlbFargateService - vpc subnet select test select public subnet', () =
 
   // THEN
   // we should still have the assgin public Ip.
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     NetworkConfiguration: {
       AwsvpcConfiguration: {
         AssignPublicIp: 'ENABLED',
@@ -510,7 +503,7 @@ test('Wordpress - DB inbound rules have wordpress SG', () => {
 
   // THEN
   // we should still have the assgin public Ip.
-  expect(stack).toHaveResource('AWS::EC2::SecurityGroupIngress', {
+  Template.fromStack(stack).hasResourceProperties('AWS::EC2::SecurityGroupIngress', {
     IpProtocol: 'tcp',
     Description: {
       'Fn::Join': [
@@ -565,7 +558,7 @@ test('Wordpress - EFS inbound rules have Fargate Service SG', () => {
 
   // THEN
   // we should still have the assgin public Ip.
-  expect(stack).toHaveResource('AWS::EC2::SecurityGroupIngress', {
+  Template.fromStack(stack).hasResourceProperties('AWS::EC2::SecurityGroupIngress', {
     IpProtocol: 'tcp',
     Description: 'allow wordpress to connect efs',
     FromPort: 2049,
@@ -607,19 +600,10 @@ test('fargate spot termination handler - 100% spot', () => {
 
   // THEN
   // we should have lambda function as the termination handler
-  expect(stack).toHaveResource('AWS::Lambda::Function', {
+  Template.fromStack(stack).hasResourceProperties('AWS::Lambda::Function', {
     Code: {
       ImageUri: {
-        'Fn::Join': [
-          '',
-          [
-            '123456789012.dkr.ecr.us-east-1.',
-            {
-              Ref: 'AWS::URLSuffix',
-            },
-            '/aws-cdk/assets:ec3135368f0a72eb451adf9e40cf23a4b80beececc1908170d08a7f81f91f59a',
-          ],
-        ],
+        'Fn::Sub': '123456789012.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:e1ff86456ef1f6c01cbdba1a0e501d5221501a731018587980a3ea1d80122092',
       },
     },
     Role: {
@@ -632,7 +616,7 @@ test('fargate spot termination handler - 100% spot', () => {
     Timeout: 20,
   });
   // we should have an events rule
-  expect(stack).toHaveResource('AWS::Events::Rule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::Events::Rule', {
     EventPattern: {
       'source': [
         'aws.ecs',
@@ -704,19 +688,10 @@ test('fargate spot termination handler - partial spot', () => {
 
   // THEN
   // we should have lambda function as the termination handler
-  expect(stack).toHaveResource('AWS::Lambda::Function', {
+  Template.fromStack(stack).hasResourceProperties('AWS::Lambda::Function', {
     Code: {
       ImageUri: {
-        'Fn::Join': [
-          '',
-          [
-            '123456789012.dkr.ecr.us-east-1.',
-            {
-              Ref: 'AWS::URLSuffix',
-            },
-            '/aws-cdk/assets:ec3135368f0a72eb451adf9e40cf23a4b80beececc1908170d08a7f81f91f59a',
-          ],
-        ],
+        'Fn::Sub': '123456789012.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-us-east-1:e1ff86456ef1f6c01cbdba1a0e501d5221501a731018587980a3ea1d80122092',
       },
     },
     Role: {
@@ -729,7 +704,7 @@ test('fargate spot termination handler - partial spot', () => {
     Timeout: 20,
   });
   // we should have an events rule
-  expect(stack).toHaveResource('AWS::Events::Rule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::Events::Rule', {
     EventPattern: {
       'source': [
         'aws.ecs',
@@ -872,27 +847,19 @@ test('DualNlbFargateService - minimal setup both internal and external NLB', () 
   // THEN
   // We should have two NLBs
   // the external one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'network',
   });
   // the internal one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'network',
   });
   // We should have fargate service
-  expect(stack).toHaveResourceLike('AWS::ECS::Service', {
-    Properties: {
-      LaunchType: 'FARGATE',
-    },
-    DependsOn: [
-      'ServiceCluster2E988025',
-      'ServiceCluster572F72F1',
-      'ServiceExtNlbListener80208FFCE9',
-      'ServiceIntNlbListener8090EABD03',
-    ],
-  }, ResourcePart.CompleteDefinition);
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
+    LaunchType: 'FARGATE',
+  });
 });
 
 
@@ -927,30 +894,22 @@ test('DualAlbFargateService - Support gRPC application', () => {
   // THEN
   // We should have two ALBs
   // the external one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
   // the internal one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internal',
     Type: 'application',
   });
   // We should have fargate service
-  expect(stack).toHaveResourceLike('AWS::ECS::Service', {
-    Properties: {
-      LaunchType: 'FARGATE',
-    },
-    DependsOn: [
-      'ServiceCluster2E988025',
-      'ServiceCluster572F72F1',
-      'ServiceExtAlbListener50051E7DF4764',
-      'ServiceIntAlbListener50051394E374D',
-    ],
-  }, ResourcePart.CompleteDefinition);
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
+    LaunchType: 'FARGATE',
+  });
 
   // TargetGroup need setting GRPC.
-  expect(stack).toHaveResource( 'AWS::ElasticLoadBalancingV2::TargetGroup', {
+  Template.fromStack(stack).hasResourceProperties( 'AWS::ElasticLoadBalancingV2::TargetGroup', {
     Matcher: {
       GrpcCode: '12',
     },
@@ -961,7 +920,7 @@ test('DualAlbFargateService - Support gRPC application', () => {
   });
 
   // Listener need to setting Certificates and Protocol HTTPS.
-  expect(stack).toHaveResource( 'AWS::ElasticLoadBalancingV2::Listener', {
+  Template.fromStack(stack).hasResourceProperties( 'AWS::ElasticLoadBalancingV2::Listener', {
     Certificates: [
       {
         CertificateArn: 'arn:aws:acm:region:account-id:certificate/zzzzzzz-2222-3333-4444-3edc4rfv5t',
@@ -999,19 +958,18 @@ test('DualAlbFargateService - Allowed to import an existing ECS Cluster', () => 
   // THEN
   // We should have two ALBs
   // the external one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
 
   // Use exist the ECS Cluster.
-  expect(stack).toHaveResource('AWS::ECS::Cluster', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Cluster', {
     ClusterName: 'myexistCluster',
   });
 
   // check not have ClusterCapacityProviderAssociations Resource.
-  expect(stack).not.toHaveResource('AWS::ECS::ClusterCapacityProviderAssociations');
-
+  Template.fromStack(stack).resourceCountIs('AWS::ECS::ClusterCapacityProviderAssociations', 0);
 });
 
 test('DualAlbFargateService - Support Setting Service Name and Setting ClusterName', () => {
@@ -1043,18 +1001,18 @@ test('DualAlbFargateService - Support Setting Service Name and Setting ClusterNa
   // THEN
   // We should have two ALBs
   // the external one
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     Scheme: 'internet-facing',
     Type: 'application',
   });
 
   // Create the new ECS Cluster.
-  expect(stack).toHaveResource('AWS::ECS::Cluster', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Cluster', {
     ClusterName: 'myCustomClusterName',
   });
 
   // Check Service Name.
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     ServiceName: 'nginxService',
   });
 });
@@ -1123,11 +1081,11 @@ test('DualAlbFargateService - healthCheckGracePeriod, maxHealthyPercent and minH
         external: { port: 80 },
         serviceName: 'nginxService',
         healthCheck: {
-          interval: cdk.Duration.seconds(99),
+          interval: Duration.seconds(99),
         },
         maxHealthyPercent: 98,
         minHealthyPercent: 97,
-        healthCheckGracePeriod: cdk.Duration.seconds(96),
+        healthCheckGracePeriod: Duration.seconds(96),
       },
     ],
   });
@@ -1137,7 +1095,7 @@ test('DualAlbFargateService - healthCheckGracePeriod, maxHealthyPercent and minH
   // The maxHealthyPercent should be 98.
   // The minHealthyPercent should be 97.
   // The healthCheckGracePeriod should be 96.
-  expect(stack).toHaveResource('AWS::ECS::Service', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ECS::Service', {
     DeploymentConfiguration: {
       DeploymentCircuitBreaker: {
         Enable: true,
@@ -1149,7 +1107,7 @@ test('DualAlbFargateService - healthCheckGracePeriod, maxHealthyPercent and minH
     HealthCheckGracePeriodSeconds: 96,
   });
   // Check target group setting HealthCheckIntervalSeconds 99.
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::TargetGroup', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::TargetGroup', {
     HealthCheckIntervalSeconds: 99,
     Port: 80,
   });
@@ -1169,8 +1127,8 @@ test('DualAlbFargateService - setting alb idletimeout', () => {
   });
 
   new DualAlbFargateService(stack, 'Service', {
-    externalAlbIdleTimeout: cdk.Duration.seconds(900),
-    internalAlbIdleTimeout: cdk.Duration.seconds(800),
+    externalAlbIdleTimeout: Duration.seconds(900),
+    internalAlbIdleTimeout: Duration.seconds(800),
     tasks: [
       {
         task: task,
@@ -1179,18 +1137,18 @@ test('DualAlbFargateService - setting alb idletimeout', () => {
         internal: { port: 80 },
         serviceName: 'nginxService',
         healthCheck: {
-          interval: cdk.Duration.seconds(99),
+          interval: Duration.seconds(99),
         },
         maxHealthyPercent: 98,
         minHealthyPercent: 97,
-        healthCheckGracePeriod: cdk.Duration.seconds(96),
+        healthCheckGracePeriod: Duration.seconds(96),
       },
     ],
   });
 
   // THEN
   // The alb idle time out should be 900 seconds.
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     LoadBalancerAttributes: [
       {
         Key: 'deletion_protection.enabled',
@@ -1203,7 +1161,7 @@ test('DualAlbFargateService - setting alb idletimeout', () => {
     ],
   });
 
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::LoadBalancer', {
     LoadBalancerAttributes: [
       {
         Key: 'deletion_protection.enabled',
@@ -1260,7 +1218,7 @@ test('DualAlbFargateService - listener forward condition', () => {
 
 
   // THEN
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::ListenerRule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::ListenerRule', {
     Actions: [
       {
         TargetGroupArn: {
@@ -1285,7 +1243,7 @@ test('DualAlbFargateService - listener forward condition', () => {
     Priority: 1,
   });
 
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::ListenerRule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::ListenerRule', {
     Actions: [
       {
         TargetGroupArn: {
@@ -1310,7 +1268,7 @@ test('DualAlbFargateService - listener forward condition', () => {
     Priority: 2,
   });
 
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::ListenerRule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::ListenerRule', {
     Actions: [
       {
         TargetGroupArn: {
@@ -1335,7 +1293,7 @@ test('DualAlbFargateService - listener forward condition', () => {
     Priority: 1,
   });
 
-  expect(stack).toHaveResource('AWS::ElasticLoadBalancingV2::ListenerRule', {
+  Template.fromStack(stack).hasResourceProperties('AWS::ElasticLoadBalancingV2::ListenerRule', {
     Actions: [
       {
         TargetGroupArn: {

@@ -1,37 +1,26 @@
-const { AwsCdkConstructLibrary, DevEnvironmentDockerImage, Gitpod } = require('projen');
+const { awscdk, DevEnvironmentDockerImage, Gitpod } = require('projen');
 
-const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
-
-const project = new AwsCdkConstructLibrary({
+const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Pahud Hsieh',
   authorAddress: 'pahudnet@gmail.com',
-  cdkVersion: '1.95.2',
+  cdkVersion: '2.11.0',
   defaultReleaseBranch: 'main',
   name: 'cdk-fargate-patterns',
   description: 'CDK patterns for serverless container with AWS Fargate',
   repositoryUrl: 'https://github.com/pahud/cdk-fargate-patterns.git',
-  cdkDependencies: [
-    '@aws-cdk/core',
-    '@aws-cdk/aws-ec2',
-    '@aws-cdk/aws-ecs',
-    '@aws-cdk/aws-efs',
-    '@aws-cdk/aws-events',
-    '@aws-cdk/aws-events-targets',
-    '@aws-cdk/aws-iam',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-logs',
-    '@aws-cdk/aws-rds',
-    '@aws-cdk/aws-route53',
-    '@aws-cdk/aws-route53-targets',
-    '@aws-cdk/aws-secretsmanager',
-    '@aws-cdk/aws-certificatemanager',
-    '@aws-cdk/aws-elasticloadbalancingv2',
+  deps: [
+    'cdk-nag@^2.0.0',
+  ],
+  peerDeps: [
+    'cdk-nag@^2.0.0',
+  ],
+  devDeps: [
+    'cdk-nag@2.0.0',
   ],
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],
-      secret: AUTOMATION_TOKEN,
     },
   },
   autoApproveOptions: {
@@ -86,7 +75,7 @@ gitpod.addVscodeExtensions(
   'AmazonWebServices.aws-toolkit-vscode',
 );
 
-const common_exclude = ['cdk.out', 'cdk.context.json', 'yarn-error.log', 'dependabot.yml', 'website/public'];
+const common_exclude = ['cdk.out', 'cdk.context.json', 'yarn-error.log', 'dependabot.yml', 'website/public', '.vscode'];
 project.npmignore.exclude(...common_exclude, 'images', 'docs', 'website');
 project.gitignore.exclude(...common_exclude);
 

@@ -1,19 +1,22 @@
 import * as path from 'path';
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
-import * as cdk from '@aws-cdk/core';
+import {
+  Stack, App,
+  aws_ec2 as ec2,
+  aws_ecs as ecs,
+  aws_certificatemanager as acm,
+  aws_elasticloadbalancingv2 as elbv2,
+} from 'aws-cdk-lib';
+
 import { DualAlbFargateService } from './index';
 
-const app = new cdk.App();
+const app = new App();
 
 const env = {
   region: process.env.CDK_DEFAULT_REGION,
   account: process.env.CDK_DEFAULT_ACCOUNT,
 };
 
-const stack = new cdk.Stack(app, 'demo-stack2', { env });
+const stack = new Stack(app, 'demo-stack2', { env });
 
 const zoneName = 'svc.local';
 const internalAlbRecordName = 'internal';

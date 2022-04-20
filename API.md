@@ -14,7 +14,7 @@ new BaseFargateService(scope: Construct, id: string, props: BaseFargateServicePr
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.BaseFargateService.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -40,7 +40,7 @@ new BaseFargateService(scope: Construct, id: string, props: BaseFargateServicePr
 public readonly service: FargateService[];
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.FargateService`](#@aws-cdk/aws-ecs.FargateService)[]
+- *Type:* [`aws-cdk-lib.aws_ecs.FargateService`](#aws-cdk-lib.aws_ecs.FargateService)[]
 
 The service(s) created from the task(s).
 
@@ -52,7 +52,7 @@ The service(s) created from the task(s).
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 The VPC.
 
@@ -73,7 +73,7 @@ new Database(scope: Construct, id: string, props: DatabaseProps)
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.Database.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -119,7 +119,7 @@ public readonly clusterIdentifier: string;
 public readonly connections: Connections;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.Connections`](#@aws-cdk/aws-ec2.Connections)
+- *Type:* [`aws-cdk-lib.aws_ec2.Connections`](#aws-cdk-lib.aws_ec2.Connections)
 
 ---
 
@@ -129,7 +129,7 @@ public readonly connections: Connections;
 public readonly secret: ISecret;
 ```
 
-- *Type:* [`@aws-cdk/aws-secretsmanager.ISecret`](#@aws-cdk/aws-secretsmanager.ISecret)
+- *Type:* [`aws-cdk-lib.aws_secretsmanager.ISecret`](#aws-cdk-lib.aws_secretsmanager.ISecret)
 
 ---
 
@@ -139,7 +139,7 @@ public readonly secret: ISecret;
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -156,7 +156,7 @@ new DualAlbFargateService(scope: Construct, id: string, props: DualAlbFargateSer
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.DualAlbFargateService.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -182,7 +182,7 @@ new DualAlbFargateService(scope: Construct, id: string, props: DualAlbFargateSer
 public readonly externalAlb: ApplicationLoadBalancer;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.ApplicationLoadBalancer`](#@aws-cdk/aws-elasticloadbalancingv2.ApplicationLoadBalancer)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer`](#aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer)
 
 The external ALB.
 
@@ -194,7 +194,7 @@ The external ALB.
 public readonly internalAlb: ApplicationLoadBalancer;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.ApplicationLoadBalancer`](#@aws-cdk/aws-elasticloadbalancingv2.ApplicationLoadBalancer)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer`](#aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer)
 
 The internal ALB.
 
@@ -213,7 +213,7 @@ new DualNlbFargateService(scope: Construct, id: string, props: DualNlbFargateSer
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.DualNlbFargateService.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -239,7 +239,7 @@ new DualNlbFargateService(scope: Construct, id: string, props: DualNlbFargateSer
 public readonly externalNlb: NetworkLoadBalancer;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.NetworkLoadBalancer`](#@aws-cdk/aws-elasticloadbalancingv2.NetworkLoadBalancer)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.NetworkLoadBalancer`](#aws-cdk-lib.aws_elasticloadbalancingv2.NetworkLoadBalancer)
 
 The external Nlb.
 
@@ -251,7 +251,7 @@ The external Nlb.
 public readonly internalNlb: NetworkLoadBalancer;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.NetworkLoadBalancer`](#@aws-cdk/aws-elasticloadbalancingv2.NetworkLoadBalancer)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.NetworkLoadBalancer`](#aws-cdk-lib.aws_elasticloadbalancingv2.NetworkLoadBalancer)
 
 The internal Nlb.
 
@@ -272,7 +272,7 @@ new Laravel(scope: Construct, id: string, props: LaravelProps)
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.Laravel.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -308,7 +308,7 @@ public readonly svc: DualAlbFargateService;
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -335,7 +335,7 @@ new WordPress(scope: Construct, id: string, props?: WordPressProps)
 
 ##### `scope`<sup>Required</sup> <a name="cdk-fargate-patterns.WordPress.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -371,7 +371,7 @@ public readonly svc: DualAlbFargateService;
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -429,7 +429,7 @@ Enable the ECS service circuit breaker.
 public readonly cluster: ICluster;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ICluster`](#@aws-cdk/aws-ecs.ICluster)
+- *Type:* [`aws-cdk-lib.aws_ecs.ICluster`](#aws-cdk-lib.aws_ecs.ICluster)
 - *Default:* create a new ECS Cluster.
 
 Use existing ECS Cluster.
@@ -442,7 +442,7 @@ Use existing ECS Cluster.
 public readonly clusterProps: ClusterProps;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ClusterProps`](#@aws-cdk/aws-ecs.ClusterProps)
+- *Type:* [`aws-cdk-lib.aws_ecs.ClusterProps`](#aws-cdk-lib.aws_ecs.ClusterProps)
 - *Default:* Create vpc and enable Fargate Capacity Providers.
 
 The properties used to define an ECS cluster.
@@ -508,7 +508,7 @@ Enable the fargate spot termination handler.
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -518,7 +518,7 @@ public readonly vpc: IVpc;
 public readonly vpcSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 - *Default:* {
 subnetType: ec2.SubnetType.PRIVATE,
 }
@@ -545,7 +545,7 @@ const databaseCofig: DatabaseCofig = { ... }
 public readonly connections: Connections;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.Connections`](#@aws-cdk/aws-ec2.Connections)
+- *Type:* [`aws-cdk-lib.aws_ec2.Connections`](#aws-cdk-lib.aws_ec2.Connections)
 
 The database connnections.
 
@@ -581,7 +581,7 @@ The databasae identifier.
 public readonly secret: ISecret;
 ```
 
-- *Type:* [`@aws-cdk/aws-secretsmanager.ISecret`](#@aws-cdk/aws-secretsmanager.ISecret)
+- *Type:* [`aws-cdk-lib.aws_secretsmanager.ISecret`](#aws-cdk-lib.aws_secretsmanager.ISecret)
 
 The database secret.
 
@@ -603,7 +603,7 @@ const databaseProps: DatabaseProps = { ... }
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 The VPC for the database.
 
@@ -615,7 +615,7 @@ The VPC for the database.
 public readonly allowFrom: IConnectable;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IConnectable`](#@aws-cdk/aws-ec2.IConnectable)
+- *Type:* [`aws-cdk-lib.aws_ec2.IConnectable`](#aws-cdk-lib.aws_ec2.IConnectable)
 - *Default:* the whole VPC CIDR
 
 Allow database connection.
@@ -641,7 +641,7 @@ enable aurora serverless.
 public readonly backupRetention: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* 7 days
 
 database backup retension.
@@ -654,7 +654,7 @@ database backup retension.
 public readonly clusterEngine: IClusterEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IClusterEngine`](#@aws-cdk/aws-rds.IClusterEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IClusterEngine`](#aws-cdk-lib.aws_rds.IClusterEngine)
 - *Default:* rds.AuroraMysqlEngineVersion.VER_2_09_1
 
 The database cluster engine.
@@ -667,7 +667,7 @@ The database cluster engine.
 public readonly databaseSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 
 VPC subnets for database.
 
@@ -692,7 +692,7 @@ Default database name to create.
 public readonly instanceEngine: IInstanceEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IInstanceEngine`](#@aws-cdk/aws-rds.IInstanceEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IInstanceEngine`](#aws-cdk-lib.aws_rds.IInstanceEngine)
 - *Default:* MySQL 8.0.21
 
 The database instance engine.
@@ -705,7 +705,7 @@ The database instance engine.
 public readonly instanceType: InstanceType;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.InstanceType`](#@aws-cdk/aws-ec2.InstanceType)
+- *Type:* [`aws-cdk-lib.aws_ec2.InstanceType`](#aws-cdk-lib.aws_ec2.InstanceType)
 - *Default:* r5.large
 
 The database instance type.
@@ -768,7 +768,7 @@ Enable the ECS service circuit breaker.
 public readonly cluster: ICluster;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ICluster`](#@aws-cdk/aws-ecs.ICluster)
+- *Type:* [`aws-cdk-lib.aws_ecs.ICluster`](#aws-cdk-lib.aws_ecs.ICluster)
 - *Default:* create a new ECS Cluster.
 
 Use existing ECS Cluster.
@@ -781,7 +781,7 @@ Use existing ECS Cluster.
 public readonly clusterProps: ClusterProps;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ClusterProps`](#@aws-cdk/aws-ecs.ClusterProps)
+- *Type:* [`aws-cdk-lib.aws_ecs.ClusterProps`](#aws-cdk-lib.aws_ecs.ClusterProps)
 - *Default:* Create vpc and enable Fargate Capacity Providers.
 
 The properties used to define an ECS cluster.
@@ -847,7 +847,7 @@ Enable the fargate spot termination handler.
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -857,7 +857,7 @@ public readonly vpc: IVpc;
 public readonly vpcSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 - *Default:* {
 subnetType: ec2.SubnetType.PRIVATE,
 }
@@ -872,7 +872,7 @@ The subnets to associate with the service.
 public readonly externalAlbIdleTimeout: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* 60.
 
 The external load balancer idle timeout, in seconds.
@@ -885,7 +885,7 @@ The external load balancer idle timeout, in seconds.
 public readonly internalAlbIdleTimeout: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* 60.
 
 The internal load balancer idle timeout, in seconds.
@@ -933,7 +933,7 @@ Enable the ECS service circuit breaker.
 public readonly cluster: ICluster;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ICluster`](#@aws-cdk/aws-ecs.ICluster)
+- *Type:* [`aws-cdk-lib.aws_ecs.ICluster`](#aws-cdk-lib.aws_ecs.ICluster)
 - *Default:* create a new ECS Cluster.
 
 Use existing ECS Cluster.
@@ -946,7 +946,7 @@ Use existing ECS Cluster.
 public readonly clusterProps: ClusterProps;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.ClusterProps`](#@aws-cdk/aws-ecs.ClusterProps)
+- *Type:* [`aws-cdk-lib.aws_ecs.ClusterProps`](#aws-cdk-lib.aws_ecs.ClusterProps)
 - *Default:* Create vpc and enable Fargate Capacity Providers.
 
 The properties used to define an ECS cluster.
@@ -1012,7 +1012,7 @@ Enable the fargate spot termination handler.
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -1022,7 +1022,7 @@ public readonly vpc: IVpc;
 public readonly vpcSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 - *Default:* {
 subnetType: ec2.SubnetType.PRIVATE,
 }
@@ -1049,7 +1049,7 @@ const fargateTaskProps: FargateTaskProps = { ... }
 public readonly task: FargateTaskDefinition;
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.FargateTaskDefinition`](#@aws-cdk/aws-ecs.FargateTaskDefinition)
+- *Type:* [`aws-cdk-lib.aws_ecs.FargateTaskDefinition`](#aws-cdk-lib.aws_ecs.FargateTaskDefinition)
 
 ---
 
@@ -1059,7 +1059,7 @@ public readonly task: FargateTaskDefinition;
 public readonly capacityProviderStrategy: CapacityProviderStrategy[];
 ```
 
-- *Type:* [`@aws-cdk/aws-ecs.CapacityProviderStrategy`](#@aws-cdk/aws-ecs.CapacityProviderStrategy)[]
+- *Type:* [`aws-cdk-lib.aws_ecs.CapacityProviderStrategy`](#aws-cdk-lib.aws_ecs.CapacityProviderStrategy)[]
 
 Customized capacity provider strategy.
 
@@ -1097,7 +1097,7 @@ The external ELB listener.
 public readonly healthCheck: HealthCheck;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.HealthCheck`](#@aws-cdk/aws-elasticloadbalancingv2.HealthCheck)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.HealthCheck`](#aws-cdk-lib.aws_elasticloadbalancingv2.HealthCheck)
 
 health check from elbv2 target group.
 
@@ -1109,7 +1109,7 @@ health check from elbv2 target group.
 public readonly healthCheckGracePeriod: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* cdk.Duration.seconds(60),
 
 The period of time, in seconds, that the Amazon ECS service scheduler ignores unhealthy Elastic Load Balancing target health checks after a task has first started.
@@ -1161,7 +1161,7 @@ The minimum number of tasks, specified as a percentage of the Amazon ECS service
 public readonly protocol: Protocol;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.Protocol`](#@aws-cdk/aws-elasticloadbalancingv2.Protocol)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.Protocol`](#aws-cdk-lib.aws_elasticloadbalancingv2.Protocol)
 - *Default:* TCP
 
 The target group protocol for NLB.
@@ -1176,7 +1176,7 @@ For ALB, this option will be ignored and always set to HTTP.
 public readonly protocolVersion: ApplicationProtocolVersion;
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.ApplicationProtocolVersion`](#@aws-cdk/aws-elasticloadbalancingv2.ApplicationProtocolVersion)
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationProtocolVersion`](#aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationProtocolVersion)
 
 The protocol version to use.
 
@@ -1265,7 +1265,7 @@ the default cluster engine instead.
 public readonly backupRetention: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* 7 days
 
 database backup retension.
@@ -1278,7 +1278,7 @@ database backup retension.
 public readonly clusterEngine: IClusterEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IClusterEngine`](#@aws-cdk/aws-rds.IClusterEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IClusterEngine`](#aws-cdk-lib.aws_rds.IClusterEngine)
 - *Default:* rds.AuroraMysqlEngineVersion.VER_2_09_1
 
 The database cluster engine.
@@ -1304,7 +1304,7 @@ The Laravel container port.
 public readonly databaseInstanceType: InstanceType;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.InstanceType`](#@aws-cdk/aws-ec2.InstanceType)
+- *Type:* [`aws-cdk-lib.aws_ec2.InstanceType`](#aws-cdk-lib.aws_ec2.InstanceType)
 - *Default:* r5.large
 
 Database instance type.
@@ -1317,7 +1317,7 @@ Database instance type.
 public readonly databaseSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 - *Default:* VPC isolated subnets
 
 VPC subnets for database.
@@ -1342,7 +1342,7 @@ The default database name to create.
 public readonly efsFileSystem: FileSystemProps;
 ```
 
-- *Type:* [`@aws-cdk/aws-efs.FileSystemProps`](#@aws-cdk/aws-efs.FileSystemProps)
+- *Type:* [`aws-cdk-lib.aws_efs.FileSystemProps`](#aws-cdk-lib.aws_efs.FileSystemProps)
 
 Options to create the EFS FileSystem.
 
@@ -1366,7 +1366,7 @@ enable ECS Exec.
 public readonly instanceEngine: IInstanceEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IInstanceEngine`](#@aws-cdk/aws-rds.IInstanceEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IInstanceEngine`](#aws-cdk-lib.aws_rds.IInstanceEngine)
 - *Default:* MySQL 8.0.21
 
 The database instance engine.
@@ -1418,7 +1418,7 @@ enable fargate spot.
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 
@@ -1452,7 +1452,7 @@ The port of the listener.
 public readonly certificate: ICertificate[];
 ```
 
-- *Type:* [`@aws-cdk/aws-certificatemanager.ICertificate`](#@aws-cdk/aws-certificatemanager.ICertificate)[]
+- *Type:* [`aws-cdk-lib.aws_certificatemanager.ICertificate`](#aws-cdk-lib.aws_certificatemanager.ICertificate)[]
 - *Default:* no certificate(HTTP only)
 
 The ACM certificate for the HTTPS listener.
@@ -1465,7 +1465,7 @@ The ACM certificate for the HTTPS listener.
 public readonly forwardConditions: ListenerCondition[][];
 ```
 
-- *Type:* [`@aws-cdk/aws-elasticloadbalancingv2.ListenerCondition`](#@aws-cdk/aws-elasticloadbalancingv2.ListenerCondition)[][]
+- *Type:* [`aws-cdk-lib.aws_elasticloadbalancingv2.ListenerCondition`](#aws-cdk-lib.aws_elasticloadbalancingv2.ListenerCondition)[][]
 - *Default:* no forward conditions.
 
 Listener forward conditions.
@@ -1616,7 +1616,7 @@ the default cluster engine instead.
 public readonly backupRetention: Duration;
 ```
 
-- *Type:* [`@aws-cdk/core.Duration`](#@aws-cdk/core.Duration)
+- *Type:* [`aws-cdk-lib.Duration`](#aws-cdk-lib.Duration)
 - *Default:* 7 days
 
 database backup retension.
@@ -1629,7 +1629,7 @@ database backup retension.
 public readonly clusterEngine: IClusterEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IClusterEngine`](#@aws-cdk/aws-rds.IClusterEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IClusterEngine`](#aws-cdk-lib.aws_rds.IClusterEngine)
 - *Default:* rds.AuroraMysqlEngineVersion.VER_2_09_1
 
 The database cluster engine.
@@ -1642,7 +1642,7 @@ The database cluster engine.
 public readonly databaseInstanceType: InstanceType;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.InstanceType`](#@aws-cdk/aws-ec2.InstanceType)
+- *Type:* [`aws-cdk-lib.aws_ec2.InstanceType`](#aws-cdk-lib.aws_ec2.InstanceType)
 - *Default:* r5.large
 
 Database instance type.
@@ -1655,7 +1655,7 @@ Database instance type.
 public readonly databaseSubnets: SubnetSelection;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.SubnetSelection`](#@aws-cdk/aws-ec2.SubnetSelection)
+- *Type:* [`aws-cdk-lib.aws_ec2.SubnetSelection`](#aws-cdk-lib.aws_ec2.SubnetSelection)
 - *Default:* VPC isolated subnets
 
 VPC subnets for database.
@@ -1680,7 +1680,7 @@ enable ECS Exec.
 public readonly instanceEngine: IInstanceEngine;
 ```
 
-- *Type:* [`@aws-cdk/aws-rds.IInstanceEngine`](#@aws-cdk/aws-rds.IInstanceEngine)
+- *Type:* [`aws-cdk-lib.aws_rds.IInstanceEngine`](#aws-cdk-lib.aws_rds.IInstanceEngine)
 - *Default:* MySQL 8.0.21
 
 The database instance engine.
@@ -1732,7 +1732,7 @@ enable fargate spot.
 public readonly vpc: IVpc;
 ```
 
-- *Type:* [`@aws-cdk/aws-ec2.IVpc`](#@aws-cdk/aws-ec2.IVpc)
+- *Type:* [`aws-cdk-lib.aws_ec2.IVpc`](#aws-cdk-lib.aws_ec2.IVpc)
 
 ---
 

@@ -1,9 +1,14 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as efs from '@aws-cdk/aws-efs';
-import * as logs from '@aws-cdk/aws-logs';
-import * as rds from '@aws-cdk/aws-rds';
-import * as cdk from '@aws-cdk/core';
+import {
+  Duration, RemovalPolicy,
+  aws_ec2 as ec2,
+  aws_ecs as ecs,
+  aws_efs as efs,
+  aws_logs as logs,
+  aws_rds as rds,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
+
 import { DualAlbFargateService, FargateTaskProps, Database, DatabaseProps, LoadBalancerAccessibility } from './';
 import { getOrCreateVpc } from './common/common-functions';
 
@@ -52,7 +57,7 @@ export interface LaravelProps {
    *
    * @default - 7 days
    */
-  readonly backupRetention?: cdk.Duration;
+  readonly backupRetention?: Duration;
 
   /**
    * task options for the Laravel fargate service
@@ -94,11 +99,11 @@ export interface LaravelProps {
 /**
  * Represents the Laravel service
  */
-export class Laravel extends cdk.Construct {
+export class Laravel extends Construct {
   readonly vpc: ec2.IVpc;
   readonly db?: Database;
   readonly svc: DualAlbFargateService;
-  constructor(scope: cdk.Construct, id: string, props: LaravelProps) {
+  constructor(scope: Construct, id: string, props: LaravelProps) {
     super(scope, id);
 
     this.vpc = props.vpc ?? getOrCreateVpc(this);
@@ -116,7 +121,7 @@ export class Laravel extends cdk.Construct {
 
     const logGroup = new logs.LogGroup(this, 'LogGroup', {
       retention: logs.RetentionDays.ONE_MONTH,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
 
     const task = new ecs.FargateTaskDefinition(this, 'Task', {
@@ -152,7 +157,7 @@ export class Laravel extends cdk.Construct {
 
     const healthCheck = {
       path: '/',
-      interval: cdk.Duration.minutes(1),
+      interval: Duration.minutes(1),
     };
 
     this.svc = new DualAlbFargateService(this, 'ALBFargateService', {

@@ -1,17 +1,21 @@
 import * as path from 'path';
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as cdk from '@aws-cdk/core';
+import {
+  Stack, App, RemovalPolicy,
+  aws_ec2 as ec2,
+  aws_certificatemanager as acm,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
 import { Laravel } from './laravel';
 
-const app = new cdk.App();
+const app = new App();
 
 const env = {
   region: process.env.CDK_DEFAULT_REGION,
   account: process.env.CDK_DEFAULT_ACCOUNT,
 };
 
-const stack = new cdk.Stack(app, 'demo-laravel', { env });
+const stack = new Stack(app, 'demo-laravel', { env });
 const certArn = stack.node.tryGetContext('ACM_CERT_ARN');
 const cert = certArn ? acm.Certificate.fromCertificateArn(stack, 'Cert', certArn) : undefined;
 const vpc = getOrCreateVpc(stack);
@@ -28,7 +32,7 @@ new Laravel(stack, 'LaravelNginxDemo', {
   loadbalancer: cert ? { port: 443, certificate: [cert] } : { port: 80 },
   efsFileSystem: {
     vpc,
-    removalPolicy: cdk.RemovalPolicy.DESTROY,
+    removalPolicy: RemovalPolicy.DESTROY,
   },
 });
 
@@ -46,12 +50,12 @@ new Laravel(stack, 'LaravelBitnamiDemo', {
   loadbalancer: cert ? { port: 443, certificate: [cert] } : { port: 80 },
   efsFileSystem: {
     vpc,
-    removalPolicy: cdk.RemovalPolicy.DESTROY,
+    removalPolicy: RemovalPolicy.DESTROY,
   },
 });
 
 
-function getOrCreateVpc(scope: cdk.Construct): ec2.IVpc {
+function getOrCreateVpc(scope: Construct): ec2.IVpc {
   // use an existing vpc or create a new one
   return scope.node.tryGetContext('use_default_vpc') === '1'
     || process.env.CDK_USE_DEFAULT_VPC === '1' ? ec2.Vpc.fromLookup(scope, 'Vpc', { isDefault: true }) :

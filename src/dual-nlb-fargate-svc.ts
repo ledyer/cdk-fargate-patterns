@@ -1,7 +1,11 @@
-import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
-import * as route53 from '@aws-cdk/aws-route53';
-import * as targets from '@aws-cdk/aws-route53-targets';
-import * as cdk from '@aws-cdk/core';
+import {
+  CfnOutput,
+  aws_elasticloadbalancingv2 as elbv2,
+  aws_route53 as route53,
+  aws_route53_targets as targets,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
 import { BaseFargateService, BaseFargateServiceProps } from './main';
 
 
@@ -11,12 +15,12 @@ export class DualNlbFargateService extends BaseFargateService {
   /**
    * The external Nlb
    */
-  readonly externalNlb?: elbv2.NetworkLoadBalancer
+  readonly externalNlb?: elbv2.NetworkLoadBalancer;
   /**
    * The internal Nlb
    */
-  readonly internalNlb?: elbv2.NetworkLoadBalancer
-  constructor(scope: cdk.Construct, id: string, props: DualNlbFargateServiceProps) {
+  readonly internalNlb?: elbv2.NetworkLoadBalancer;
+  constructor(scope: Construct, id: string, props: DualNlbFargateServiceProps) {
     super(scope, id, props);
 
 
@@ -108,19 +112,19 @@ export class DualNlbFargateService extends BaseFargateService {
         });
       }
       if (this.hasExternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalNlb!.loadBalancerDnsName}` });
-        new cdk.CfnOutput(this, 'ExternalEndpointPrivate', { value: `http://${externalNlbRecordName}.${this.zoneName}` });
+        new CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalNlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'ExternalEndpointPrivate', { value: `http://${externalNlbRecordName}.${this.zoneName}` });
       }
       if (this.hasInternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalNlb!.loadBalancerDnsName}` });
-        new cdk.CfnOutput(this, 'InternalEndpointPrivate', { value: `http://${internalNlbRecordName}.${this.zoneName}` });
+        new CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalNlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'InternalEndpointPrivate', { value: `http://${internalNlbRecordName}.${this.zoneName}` });
       }
     } else {
       if (this.hasExternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalNlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalNlb!.loadBalancerDnsName}` });
       }
       if (this.hasInternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalNlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalNlb!.loadBalancerDnsName}` });
       }
     }
   }

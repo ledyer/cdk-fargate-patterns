@@ -1,7 +1,11 @@
-import * as elbv2 from '@aws-cdk/aws-elasticloadbalancingv2';
-import * as route53 from '@aws-cdk/aws-route53';
-import * as targets from '@aws-cdk/aws-route53-targets';
-import * as cdk from '@aws-cdk/core';
+import {
+  Duration, CfnOutput,
+  aws_elasticloadbalancingv2 as elbv2,
+  aws_route53 as route53,
+  aws_route53_targets as targets,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
 import { BaseFargateService, BaseFargateServiceProps } from './main';
 
 
@@ -10,31 +14,31 @@ export interface DualAlbFargateServiceProps extends BaseFargateServiceProps {
    * The external load balancer idle timeout, in seconds.
    * @default - 60.
   */
-  readonly externalAlbIdleTimeout?: cdk.Duration;
+  readonly externalAlbIdleTimeout?: Duration;
 
   /**
    * The internal load balancer idle timeout, in seconds.
    * @default - 60.
   */
-  readonly internalAlbIdleTimeout?: cdk.Duration;
+  readonly internalAlbIdleTimeout?: Duration;
 };
 
 export class DualAlbFargateService extends BaseFargateService {
   /**
    * The external ALB
    */
-  readonly externalAlb?: elbv2.ApplicationLoadBalancer
+  readonly externalAlb?: elbv2.ApplicationLoadBalancer;
   /**
    * The internal ALB
    */
-  readonly internalAlb?: elbv2.ApplicationLoadBalancer
+  readonly internalAlb?: elbv2.ApplicationLoadBalancer;
 
-  protected externalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener}
+  protected externalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener};
 
-  protected internalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener}
+  protected internalAlbApplicationListeners: {[key: string]: elbv2.ApplicationListener};
 
 
-  constructor(scope: cdk.Construct, id: string, props: DualAlbFargateServiceProps) {
+  constructor(scope: Construct, id: string, props: DualAlbFargateServiceProps) {
     super(scope, id, props);
 
     this.externalAlbApplicationListeners = {};
@@ -183,19 +187,19 @@ export class DualAlbFargateService extends BaseFargateService {
         });
       }
       if (this.hasExternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalAlb!.loadBalancerDnsName}` });
-        new cdk.CfnOutput(this, 'ExternalEndpointPrivate', { value: `http://${externalAlbRecordName}.${this.zoneName}` });
+        new CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalAlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'ExternalEndpointPrivate', { value: `http://${externalAlbRecordName}.${this.zoneName}` });
       }
       if (this.hasInternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalAlb!.loadBalancerDnsName}` });
-        new cdk.CfnOutput(this, 'InternalEndpointPrivate', { value: `http://${internalAlbRecordName}.${this.zoneName}` });
+        new CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalAlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'InternalEndpointPrivate', { value: `http://${internalAlbRecordName}.${this.zoneName}` });
       }
     } else {
       if (this.hasExternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalAlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'ExternalEndpoint', { value: `http://${this.externalAlb!.loadBalancerDnsName}` });
       }
       if (this.hasInternalLoadBalancer) {
-        new cdk.CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalAlb!.loadBalancerDnsName}` });
+        new CfnOutput(this, 'InternalEndpoint', { value: `http://${this.internalAlb!.loadBalancerDnsName}` });
       }
     }
   }
