@@ -3,19 +3,19 @@ const { awscdk, DevEnvironmentDockerImage, Gitpod } = require('projen');
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Pahud Hsieh',
   authorAddress: 'pahudnet@gmail.com',
-  cdkVersion: '2.11.0',
+  cdkVersion: '2.20.0',
   defaultReleaseBranch: 'main',
   name: 'cdk-fargate-patterns',
   description: 'CDK patterns for serverless container with AWS Fargate',
   repositoryUrl: 'https://github.com/pahud/cdk-fargate-patterns.git',
   deps: [
-    'cdk-nag@^2.0.0',
+    'cdk-nag@^2.12.30',
   ],
   peerDeps: [
-    'cdk-nag@^2.0.0',
+    'cdk-nag@^2.12.30',
   ],
   devDeps: [
-    'cdk-nag@2.0.0',
+    'cdk-nag@^2.12.30',
   ],
   depsUpgradeOptions: {
     ignoreProjen: false,
