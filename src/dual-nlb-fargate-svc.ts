@@ -41,7 +41,10 @@ export class DualNlbFargateService extends BaseFargateService {
     props.tasks.forEach((t, index) => {
       const defaultContainerName = t.task.defaultContainer?.containerName;
       // default scaling policy
-      const scaling = this.service[index].autoScaleTaskCount({ maxCapacity: t.scalingPolicy?.maxCapacity ?? 10 });
+      const scaling = this.service[index].autoScaleTaskCount({
+        minCapacity: t.scalingPolicy?.minCapacity ?? 1,
+        maxCapacity: t.scalingPolicy?.maxCapacity ?? 10,
+      });
       scaling.scaleOnCpuUtilization('CpuScaling', {
         targetUtilizationPercent: t.scalingPolicy?.targetCpuUtilization ?? 50,
       });

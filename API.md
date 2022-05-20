@@ -2153,6 +2153,7 @@ const serviceScalingPolicy: ServiceScalingPolicy = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-fargate-patterns.ServiceScalingPolicy.property.maxCapacity">maxCapacity</a></code> | <code>number</code> | max capacity for the service autoscaling. |
+| <code><a href="#cdk-fargate-patterns.ServiceScalingPolicy.property.minCapacity">minCapacity</a></code> | <code>number</code> | min capacity for the service autoscaling. |
 | <code><a href="#cdk-fargate-patterns.ServiceScalingPolicy.property.requestPerTarget">requestPerTarget</a></code> | <code>number</code> | request per target. |
 | <code><a href="#cdk-fargate-patterns.ServiceScalingPolicy.property.targetCpuUtilization">targetCpuUtilization</a></code> | <code>number</code> | target cpu utilization. |
 
@@ -2168,6 +2169,19 @@ public readonly maxCapacity: number;
 - *Default:* 10
 
 max capacity for the service autoscaling.
+
+---
+
+##### `minCapacity`<sup>Optional</sup> <a name="minCapacity" id="cdk-fargate-patterns.ServiceScalingPolicy.property.minCapacity"></a>
+
+```typescript
+public readonly minCapacity: number;
+```
+
+- *Type:* number
+- *Default:* 1
+
+min capacity for the service autoscaling.
 
 ---
 

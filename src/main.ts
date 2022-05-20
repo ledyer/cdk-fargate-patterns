@@ -170,6 +170,11 @@ export interface FargateTaskProps {
 
 export interface ServiceScalingPolicy {
   /**
+   * min capacity for the service autoscaling
+   * @default 1
+   */
+  readonly minCapacity?: number;
+  /**
    * max capacity for the service autoscaling
    * @default 10
    */
