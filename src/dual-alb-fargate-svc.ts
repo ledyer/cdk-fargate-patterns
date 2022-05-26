@@ -85,15 +85,27 @@ export class DualAlbFargateService extends BaseFargateService {
         // listener for the external ALB
         const listenerId = `ExtAlbListener${t.external.port}`;
         let listener = this.externalAlbApplicationListeners[listenerId];
+
         if (!listener) {
-          listener = new elbv2.ApplicationListener(this, listenerId, {
-            loadBalancer: this.externalAlb!,
-            open: true,
-            port: t.external.port,
-            protocol: t.external.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
-            certificates: t.external.certificate,
-            defaultTargetGroups: [exttg],
-          });
+          if (t.external.forwardConditions) {
+            listener = new elbv2.ApplicationListener(this, listenerId, {
+              loadBalancer: this.externalAlb!,
+              open: true,
+              port: t.external.port,
+              protocol: t.external.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+              certificates: t.external.certificate,
+              defaultAction: elbv2.ListenerAction.fixedResponse(404),
+            });
+          } else {
+            listener = new elbv2.ApplicationListener(this, listenerId, {
+              loadBalancer: this.externalAlb!,
+              open: true,
+              port: t.external.port,
+              protocol: t.external.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+              certificates: t.external.certificate,
+              defaultTargetGroups: [exttg],
+            });
+          }
           this.externalAlbApplicationListeners[listenerId] = listener;
         }
 
@@ -130,14 +142,25 @@ export class DualAlbFargateService extends BaseFargateService {
         const listenerId = `IntAlbListener${t.internal.port}`;
         let listener = this.internalAlbApplicationListeners[listenerId];
         if (!listener) {
-          listener = new elbv2.ApplicationListener(this, `IntAlbListener${t.internal.port}`, {
-            loadBalancer: this.internalAlb!,
-            open: true,
-            port: t.internal.port,
-            protocol: t.internal.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
-            certificates: t.internal.certificate,
-            defaultTargetGroups: [inttg],
-          });
+          if (t.internal.forwardConditions) {
+            listener = new elbv2.ApplicationListener(this, `IntAlbListener${t.internal.port}`, {
+              loadBalancer: this.internalAlb!,
+              open: true,
+              port: t.internal.port,
+              protocol: t.internal.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+              certificates: t.internal.certificate,
+              defaultAction: elbv2.ListenerAction.fixedResponse(404),
+            });
+          } else {
+            listener = new elbv2.ApplicationListener(this, `IntAlbListener${t.internal.port}`, {
+              loadBalancer: this.internalAlb!,
+              open: true,
+              port: t.internal.port,
+              protocol: t.internal.certificate ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+              certificates: t.internal.certificate,
+              defaultTargetGroups: [inttg],
+            });
+          }
           this.internalAlbApplicationListeners[listenerId] = listener;
         }
 
