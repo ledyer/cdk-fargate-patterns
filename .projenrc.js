@@ -8,13 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   name: 'cdk-fargate-patterns',
   description: 'CDK patterns for serverless container with AWS Fargate',
   repositoryUrl: 'https://github.com/pahud/cdk-fargate-patterns.git',
-  deps: [
-    'cdk-nag@^2.28.158',
-  ],
-  peerDeps: [
-    'cdk-nag@^2.28.158',
-  ],
-  devDeps: [
+  bundledDeps: [
     'cdk-nag@^2.28.158',
   ],
   depsUpgradeOptions: {
