@@ -118,8 +118,11 @@ Object {
     "LaravelBitnamiDemoALBFargateServiceExternalAlb4FC1DE4D": Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoVpcPublicSubnet1DefaultRoute0BDCDB38",
+        "LaravelBitnamiDemoVpcPublicSubnet1RouteTableAssociation46D0B16F",
         "LaravelBitnamiDemoVpcPublicSubnet2DefaultRouteC2C8E25C",
+        "LaravelBitnamiDemoVpcPublicSubnet2RouteTableAssociation20A9579B",
         "LaravelBitnamiDemoVpcPublicSubnet3DefaultRoute4C59EE86",
+        "LaravelBitnamiDemoVpcPublicSubnet3RouteTableAssociationD6FBEA59",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -215,6 +218,8 @@ Object {
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
         "LaravelBitnamiDemoALBFargateServiceExtAlbListener80CF871428",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "CapacityProviderStrategy": Array [
@@ -233,6 +238,11 @@ Object {
           "Ref": "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -289,6 +299,8 @@ Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "GroupDescription": "demo-stack/LaravelBitnamiDemo/ALBFargateService/LaravelService/SecurityGroup",
@@ -309,6 +321,8 @@ Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "Description": "Load balancer to target",
@@ -334,6 +348,8 @@ Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "MaxCapacity": 10,
@@ -377,6 +393,8 @@ Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "PolicyName": "demostackLaravelBitnamiDemoALBFargateServiceLaravelServiceTaskCountTargetCpuScaling2AD23CD4",
@@ -397,6 +415,8 @@ Object {
       "DependsOn": Array [
         "LaravelBitnamiDemoALBFargateServiceClusterD4F81F10",
         "LaravelBitnamiDemoALBFargateServiceClusterAE361F3E",
+        "LaravelBitnamiDemoTaskTaskRoleDefaultPolicy50592B60",
+        "LaravelBitnamiDemoTaskTaskRole03E75807",
       ],
       "Properties": Object {
         "PolicyName": "demostackLaravelBitnamiDemoALBFargateServiceLaravelServiceTaskCountTargetRequestScaling3D016A7B",
@@ -604,6 +624,7 @@ Object {
       "DeletionPolicy": "Delete",
       "Properties": Object {
         "BackupRetentionPeriod": 7,
+        "CopyTagsToSnapshot": true,
         "DBClusterParameterGroupName": "default.aurora-mysql5.7",
         "DBSubnetGroupName": Object {
           "Ref": "LaravelBitnamiDemoDatabaseAuroraServerlessClusterSubnetsC851F9D2",
@@ -1260,6 +1281,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "LaravelBitnamiDemoVpcPublicSubnet1NATGateway93B5EEC7": Object {
+      "DependsOn": Array [
+        "LaravelBitnamiDemoVpcPublicSubnet1DefaultRoute0BDCDB38",
+        "LaravelBitnamiDemoVpcPublicSubnet1RouteTableAssociation46D0B16F",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -1507,8 +1532,11 @@ Object {
     "LaravelNginxDemoALBFargateServiceExternalAlb65460C7F": Object {
       "DependsOn": Array [
         "LaravelNginxDemoVpcPublicSubnet1DefaultRoute2DFC331B",
+        "LaravelNginxDemoVpcPublicSubnet1RouteTableAssociationB18F2C9B",
         "LaravelNginxDemoVpcPublicSubnet2DefaultRoute4BFF02E0",
+        "LaravelNginxDemoVpcPublicSubnet2RouteTableAssociationED1C6083",
         "LaravelNginxDemoVpcPublicSubnet3DefaultRouteD2780DD9",
+        "LaravelNginxDemoVpcPublicSubnet3RouteTableAssociationCB715749",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -1604,6 +1632,8 @@ Object {
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
         "LaravelNginxDemoALBFargateServiceExtAlbListener8034DA48AB",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "CapacityProviderStrategy": Array [
@@ -1622,6 +1652,11 @@ Object {
           "Ref": "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -1678,6 +1713,8 @@ Object {
       "DependsOn": Array [
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "GroupDescription": "demo-stack/LaravelNginxDemo/ALBFargateService/LaravelService/SecurityGroup",
@@ -1698,6 +1735,8 @@ Object {
       "DependsOn": Array [
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "Description": "Load balancer to target",
@@ -1723,6 +1762,8 @@ Object {
       "DependsOn": Array [
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "PolicyName": "demostackLaravelNginxDemoALBFargateServiceLaravelServiceTaskCountTargetCpuScaling890CA931",
@@ -1743,6 +1784,8 @@ Object {
       "DependsOn": Array [
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "MaxCapacity": 10,
@@ -1786,6 +1829,8 @@ Object {
       "DependsOn": Array [
         "LaravelNginxDemoALBFargateServiceClusterD339A31A",
         "LaravelNginxDemoALBFargateServiceCluster0AF9F109",
+        "LaravelNginxDemoTaskTaskRoleDefaultPolicy0F25F64C",
+        "LaravelNginxDemoTaskTaskRoleDF89A373",
       ],
       "Properties": Object {
         "PolicyName": "demostackLaravelNginxDemoALBFargateServiceLaravelServiceTaskCountTargetRequestScaling6A388F8B",
@@ -1993,6 +2038,7 @@ Object {
       "DeletionPolicy": "Delete",
       "Properties": Object {
         "BackupRetentionPeriod": 7,
+        "CopyTagsToSnapshot": true,
         "DBClusterParameterGroupName": "default.aurora-mysql5.7",
         "DBSubnetGroupName": Object {
           "Ref": "LaravelNginxDemoDatabaseAuroraServerlessClusterSubnetsC79F8BB1",
@@ -2649,6 +2695,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "LaravelNginxDemoVpcPublicSubnet1NATGateway6899A022": Object {
+      "DependsOn": Array [
+        "LaravelNginxDemoVpcPublicSubnet1DefaultRoute2DFC331B",
+        "LaravelNginxDemoVpcPublicSubnet1RouteTableAssociationB18F2C9B",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [

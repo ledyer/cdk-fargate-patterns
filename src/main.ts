@@ -227,7 +227,7 @@ export abstract class BaseFargateService extends Construct {
   protected zoneName: string = '';
   protected hasExternalLoadBalancer: boolean = false;
   protected hasInternalLoadBalancer: boolean = false;
-  protected vpcSubnets: ec2.SubnetSelection = { subnetType: ec2.SubnetType.PRIVATE };
+  protected vpcSubnets: ec2.SubnetSelection = { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS };
   protected enableLoadBalancerAlias: boolean;
   private hasSpotCapacity: boolean = false;
   /**

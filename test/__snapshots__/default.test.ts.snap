@@ -120,8 +120,11 @@ Object {
     "ServiceExternalAlbC648C006": Object {
       "DependsOn": Array [
         "ServiceVpcPublicSubnet1DefaultRouteF72A5838",
+        "ServiceVpcPublicSubnet1RouteTableAssociation2963E32D",
         "ServiceVpcPublicSubnet2DefaultRoute97CA78A8",
+        "ServiceVpcPublicSubnet2RouteTableAssociation4E486CF4",
         "ServiceVpcPublicSubnet3DefaultRoute46D8BAF4",
+        "ServiceVpcPublicSubnet3RouteTableAssociationEB299000",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -792,6 +795,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "ServiceVpcPublicSubnet1NATGateway9BBDB3C5": Object {
+      "DependsOn": Array [
+        "ServiceVpcPublicSubnet1DefaultRouteF72A5838",
+        "ServiceVpcPublicSubnet1RouteTableAssociation2963E32D",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -1021,6 +1028,7 @@ Object {
     },
     "ServicecustomerService8F0EBE1F": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceIntAlbListener808027FA1497",
@@ -1042,6 +1050,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -1097,6 +1110,7 @@ Object {
     },
     "ServicecustomerServiceSecurityGroup79D4888A": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1117,6 +1131,7 @@ Object {
     },
     "ServicecustomerServiceSecurityGroupfromdemostackServiceInternalAlbSecurityGroup888743608080FF622F3A": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1142,6 +1157,7 @@ Object {
     },
     "ServicecustomerServiceTaskCountTarget93297161": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1185,6 +1201,7 @@ Object {
     },
     "ServicecustomerServiceTaskCountTargetCpuScalingCB60743B": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1205,6 +1222,7 @@ Object {
     },
     "ServicecustomerServiceTaskCountTargetRequestScaling2DB7EC8EF": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1314,6 +1332,7 @@ Object {
     },
     "ServiceorderService8E2DD24C": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceExtAlbListener80CF2B8C01",
@@ -1336,6 +1355,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -1398,6 +1422,7 @@ Object {
     },
     "ServiceorderServiceSecurityGroupFFF4D002": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1418,6 +1443,7 @@ Object {
     },
     "ServiceorderServiceSecurityGroupfromdemostackServiceExternalAlbSecurityGroup7509332880801797C389": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1443,6 +1469,7 @@ Object {
     },
     "ServiceorderServiceSecurityGroupfromdemostackServiceInternalAlbSecurityGroup88874360808086403B80": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1468,6 +1495,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTarget1DF1B896": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1511,6 +1539,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTargetCpuScaling3846C42F": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1531,6 +1560,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTargetRequestScaling2D4289F88": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1606,6 +1636,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTargetRequestScaling8FA38B30": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1698,6 +1729,7 @@ Object {
     },
     "ServiceproductService76D76EF8": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceIntAlbListener90902FF1540B",
@@ -1719,6 +1751,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -1774,6 +1811,7 @@ Object {
     },
     "ServiceproductServiceSecurityGroup87076A63": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1794,6 +1832,7 @@ Object {
     },
     "ServiceproductServiceSecurityGroupfromdemostackServiceInternalAlbSecurityGroup8887436080805FD62758": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1819,6 +1858,7 @@ Object {
     },
     "ServiceproductServiceTaskCountTarget3E8314AF": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1862,6 +1902,7 @@ Object {
     },
     "ServiceproductServiceTaskCountTargetCpuScaling05736257": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -1882,6 +1923,7 @@ Object {
     },
     "ServiceproductServiceTaskCountTargetRequestScaling2242D689C": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -2470,8 +2512,11 @@ Object {
     "ServiceExternalNlb2E5CE754": Object {
       "DependsOn": Array [
         "ServiceVpcPublicSubnet1DefaultRouteF72A5838",
+        "ServiceVpcPublicSubnet1RouteTableAssociation2963E32D",
         "ServiceVpcPublicSubnet2DefaultRoute97CA78A8",
+        "ServiceVpcPublicSubnet2RouteTableAssociation4E486CF4",
         "ServiceVpcPublicSubnet3DefaultRoute46D8BAF4",
+        "ServiceVpcPublicSubnet3RouteTableAssociationEB299000",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -3024,6 +3069,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "ServiceVpcPublicSubnet1NATGateway9BBDB3C5": Object {
+      "DependsOn": Array [
+        "ServiceVpcPublicSubnet1DefaultRouteF72A5838",
+        "ServiceVpcPublicSubnet1RouteTableAssociation2963E32D",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -3247,6 +3296,7 @@ Object {
     },
     "ServicecustomerService8F0EBE1F": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceIntNlbListener8080B04E5385",
@@ -3268,6 +3318,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -3323,6 +3378,7 @@ Object {
     },
     "ServicecustomerServiceSecurityGroup79D4888A": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3343,6 +3399,7 @@ Object {
     },
     "ServicecustomerServiceTaskCountTarget93297161": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3386,6 +3443,7 @@ Object {
     },
     "ServicecustomerServiceTaskCountTargetCpuScalingCB60743B": Object {
       "DependsOn": Array [
+        "customerTaskTaskRole2300583B",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3428,6 +3486,7 @@ Object {
     },
     "ServiceorderService8E2DD24C": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceExtNlbListener80208FFCE9",
@@ -3450,6 +3509,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -3512,6 +3576,7 @@ Object {
     },
     "ServiceorderServiceSecurityGroupFFF4D002": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3532,6 +3597,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTarget1DF1B896": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3575,6 +3641,7 @@ Object {
     },
     "ServiceorderServiceTaskCountTargetCpuScaling3846C42F": Object {
       "DependsOn": Array [
+        "orderTaskTaskRole8B08AA90",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3606,6 +3673,7 @@ Object {
     },
     "ServiceproductService76D76EF8": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
         "ServiceIntNlbListener9090E342FDF6",
@@ -3627,6 +3695,11 @@ Object {
           "Ref": "ServiceCluster572F72F1",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -3682,6 +3755,7 @@ Object {
     },
     "ServiceproductServiceSecurityGroup87076A63": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3702,6 +3776,7 @@ Object {
     },
     "ServiceproductServiceTaskCountTarget3E8314AF": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
@@ -3745,6 +3820,7 @@ Object {
     },
     "ServiceproductServiceTaskCountTargetCpuScaling05736257": Object {
       "DependsOn": Array [
+        "productTaskTaskRole1AF87391",
         "ServiceCluster2E988025",
         "ServiceCluster572F72F1",
       ],
